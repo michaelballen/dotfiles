@@ -10,13 +10,6 @@ function f() {
 }
 
 
-# lets toss an image onto my server and pbcopy that bitch.
-function scpp() {
-    scp "$1" aurgasm@aurgasm.us:~/paulirish.com/i;
-    echo "http://paulirish.com/i/$1" | pbcopy;
-    echo "Copied to clipboard: http://paulirish.com/i/$1"
-}
-
 # Start an HTTP server from a directory, optionally specifying the port
 function server() {
 	local port="${1:-8000}"
@@ -118,4 +111,43 @@ function extract() {
 	else
 		echo "'$1' is not a valid file"
 	fi
+}
+
+function installwp() {
+	#clone latest wp build from github
+	git clone https://github.com/WordPress/WordPress.git
+	rsync -a ./Wordpress/ ./ --remove-sent-files
+	#remove git info
+	rm -rf ./Wordpress
+	rm -rf ./.git
+	# Prompt for a theme name...
+	echo "Wordpress installed successfully...
+	
+Would you like to create a new theme? (type <theme_name>/n):
+"
+	read THEME
+	if [ "$THEME" == "n" ] || [ "$THEME" == "no" ]; then
+		echo "NO custom theme created.
+		"
+	else
+		wptheme $THEME
+	fi
+	cp wp-config-sample.php wp-config.php
+	echo "Opening sample config file..."
+	mate wp-config.php
+	mate ./wp-content/themes/$THEME
+}
+
+#install wordpress theme
+function wptheme () {
+	mkdir ./wp-content/themes/$1
+	git clone https://github.com/michaelballen/Wordpress-Custom-Theme-Boilerplate.git ./wp-content/themes/$1
+	rm -rf ./wp-content/themes/$1/.git
+	echo "/*
+Theme Name: $1
+Author: Michael B. Allen
+Author URI: http://barefootbranding.com/
+*/" > ./wp-content/themes/$1/style.css
+	echo "custom theme, $1, installed successfully with COMPASS
+	"
 }
