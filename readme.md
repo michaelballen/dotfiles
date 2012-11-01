@@ -1,8 +1,8 @@
-# Paul's dotfiles.
+# Michael's dotfiles.
 
 [mathias's readme](https://github.com/mathiasbynens/dotfiles/) is awesome. go read it.
 
-This repo is mostly for me but you're welcome to make suggestions. Mathias's is the project to fork.  I'm mostly catching up to him, @cowboy, and @gf3.
+I forked this from Paul Irish, who forked from Mathias. For now, this is pretty much just copying them. Very cool for a developer to maintain personal prefs...
 
 ## install the neccessary apps
 
