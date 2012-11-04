@@ -135,7 +135,6 @@ Would you like to create a new theme? (type <theme_name>/n):
 	cp wp-config-sample.php wp-config.php
 	echo "Opening sample config file..."
 	mate wp-config.php
-	mate ./wp-content/themes/$THEME
 }
 
 #install wordpress theme
@@ -149,5 +148,8 @@ Author: Michael B. Allen
 Author URI: http://barefootbranding.com/
 */" > ./wp-content/themes/$1/style.css
 	echo "custom theme, $1, installed successfully with COMPASS
+	
+	opening project...
 	"
+	mate ./wp-content/themes/$1
 }
