@@ -1,6 +1,6 @@
 #!/bin/bash
 cd "$(dirname "$0")"
-git pull
+#git pull, while making changes don't want to necessarily pull the repo
 function doIt() {
 	rsync --exclude ".git/" --exclude ".DS_Store" --exclude "sync.sh" --exclude "README.md" -av . ~
 }

@@ -114,10 +114,7 @@ function extract() {
 }
 
 function mampdb() {
-	mamp;
-	CREATE DATABASE $1;
-	exit;
-	echo "created database '$1'"
+	mamp show databases;
 }
 
 function installwp() {
