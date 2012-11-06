@@ -113,6 +113,13 @@ function extract() {
 	fi
 }
 
+function mampdb() {
+	mamp;
+	CREATE DATABASE $1;
+	exit;
+	echo "created database '$1'"
+}
+
 function installwp() {
 	#clone latest wp build from github
 	git clone https://github.com/WordPress/WordPress.git
