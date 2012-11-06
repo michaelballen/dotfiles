@@ -14,7 +14,6 @@ alias hosts='sudo $EDITOR /etc/hosts'
 alias spotify="osascript ~/code/SpotifyControl/SpotifyControl.scpt"
 alias mamp="cd /Applications/MAMP/htdocs"
 alias wpt="cd wp-content/themes"
-alias mysql="/Applications/MAMP/Library/bin/mysql -uroot -p"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
