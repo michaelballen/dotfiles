@@ -114,31 +114,54 @@ function extract() {
 }
 
 function mampdb() {
-	mamp show databases;
+	/Applications/MAMP/Library/bin/mysql --host=localhost -uroot -proot -e "CREATE DATABASE $1";
+	echo "Created database in MAMP, '$1'"
 }
 
-function installwp() {
-	#clone latest wp build from github
-	git clone https://github.com/WordPress/WordPress.git
-	rsync -a ./Wordpress/ ./ --remove-sent-files
-	#remove git info
-	rm -rf ./Wordpress
+genpasswd() {
+	MATRIX="HpZld&xsG47f0)W^9gNa!)LR(TQjh&UwnvP(tD5eAzr6k@E&y(umB3^@!K^cbOCV)SFJoYi2q@MIX8!1"
+	PASS=""
+	n=1
+	i=1
+	[ -z "$1" ] && length=8 || length=$1
+	[ -z "$2" ] && num=1 || num=$2
+	while [ ${n} -le $length ]; do
+		PASS="$PASS${MATRIX:$(($RANDOM%${#MATRIX})):1}"
+		n=$(($n + 1))
+	done
+	echo $PASS
+}
+
+function installwp() {	
+	local wpdir=~/Desktop/repos/Wordpress
+	local dir=${PWD}
+	echo "Checking for updated build of Wordpress..."
+	cd $wpdir && git pull
+	cd $dir
+	echo "Copying Wordpress files to local directory..."
+	rsync -a $wpdir/ $dir/
 	rm -rf ./.git
+	
+	# Prompt for database creation...
+	echo "Please enter a database name."
+	read DBNAME
+	mampdb $DBNAME #create the db in mamp
+	
+	sed -e 's/database_name_here/'"$DBNAME"'/' \
+		-e 's/username_here/root/' \
+		-e 's/password_here/root/' <wp-config-sample.php >wp-config.php
+		#-e 's/put your unique phrase here/'"$(genpasswd 65)" 
 	# Prompt for a theme name...
 	echo "Wordpress installed successfully...
-	
-Would you like to create a new theme? (type <theme_name>/n):
-"
+Would you like to create a new theme? (type theme_name or no):"
 	read THEME
 	if [ "$THEME" == "n" ] || [ "$THEME" == "no" ]; then
-		echo "NO custom theme created.
-		"
+		echo "NO custom theme created."
 	else
 		wptheme $THEME
 	fi
-	cp wp-config-sample.php wp-config.php
-	echo "Opening sample config file..."
-	mate wp-config.php
+	
+	open http://localhost/${PWD##*/}
 }
 
 #install wordpress theme
