@@ -8,7 +8,7 @@ alias -- -="cd -"
 
 # be nice
 alias please=sudo
-alias hosts='sudo $EDITOR /etc/hosts'
+alias hosts='sudo mate /etc/hosts'
 
 # handy things
 alias spotify="osascript ~/code/SpotifyControl/SpotifyControl.scpt"
